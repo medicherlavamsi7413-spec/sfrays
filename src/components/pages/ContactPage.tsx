@@ -8,6 +8,7 @@ import { Mail, Phone, MapPin, Clock, CheckCircle } from 'lucide-react';
 import { useState } from 'react';
 import { BaseCrudService } from '@/integrations';
 import { ContactSubmissions } from '@/entities';
+import { Image } from '@/components/ui/image';
 
 export default function ContactPage() {
   const [formData, setFormData] = useState({
@@ -61,9 +62,7 @@ export default function ContactPage() {
         <div className="max-w-[120rem] mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-heading font-bold text-lg">S</span>
-              </div>
+              <Image src="https://static.wixstatic.com/media/a1e0df_9660d1237dfb40138b4c81655ee6abee~mv2.jpeg" alt="SFrays Logo" className="w-8 h-8 rounded-lg" width={32} />
               <span className="font-heading text-2xl font-bold text-primary">SFrays</span>
             </Link>
             <div className="hidden md:flex items-center space-x-8">
@@ -124,7 +123,7 @@ export default function ContactPage() {
                   </div>
                   <div>
                     <h3 className="font-heading font-semibold text-secondary-foreground mb-1">Call Us</h3>
-                    <p className="font-paragraph text-secondary-foreground/70">(555) 123-4567</p>
+                    <p className="font-paragraph text-secondary-foreground/70">314 499 4093</p>
                     <p className="font-paragraph text-sm text-secondary-foreground/60">Monday - Friday, 9AM - 6PM EST</p>
                   </div>
                 </div>
@@ -339,9 +338,7 @@ export default function ContactPage() {
           <div className="grid md:grid-cols-4 gap-8">
             <div className="md:col-span-2">
               <Link to="/" className="flex items-center space-x-2 mb-6">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <span className="text-primary-foreground font-heading font-bold text-lg">S</span>
-                </div>
+                <Image src="https://static.wixstatic.com/media/a1e0df_9660d1237dfb40138b4c81655ee6abee~mv2.jpeg" alt="SFrays Logo" className="w-8 h-8 rounded-lg" width={32} />
                 <span className="font-heading text-2xl font-bold text-primary">SFrays</span>
               </Link>
               <p className="font-paragraph text-white/80 mb-6 max-w-md leading-relaxed">

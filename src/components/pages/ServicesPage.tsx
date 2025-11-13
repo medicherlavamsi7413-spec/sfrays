@@ -44,9 +44,12 @@ export default function ServicesPage() {
         <div className="max-w-[120rem] mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <Link to="/" className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                <span className="text-primary-foreground font-heading font-bold text-lg">S</span>
-              </div>
+              <Image 
+                src="https://static.wixstatic.com/media/a1e0df_9660d1237dfb40138b4c81655ee6abee~mv2.jpeg"
+                alt="SFrays Logo"
+                className="w-8 h-8 rounded-lg"
+                width={32}
+              />
               <span className="font-heading text-2xl font-bold text-primary">SFrays</span>
             </Link>
             <div className="hidden md:flex items-center space-x-8">
@@ -267,9 +270,12 @@ export default function ServicesPage() {
           <div className="grid md:grid-cols-4 gap-8">
             <div className="md:col-span-2">
               <Link to="/" className="flex items-center space-x-2 mb-6">
-                <div className="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
-                  <span className="text-primary-foreground font-heading font-bold text-lg">S</span>
-                </div>
+                <Image 
+                  src="https://static.wixstatic.com/media/a1e0df_9660d1237dfb40138b4c81655ee6abee~mv2.jpeg"
+                  alt="SFrays Logo"
+                  className="w-8 h-8 rounded-lg"
+                  width={32}
+                />
                 <span className="font-heading text-2xl font-bold text-primary">SFrays</span>
               </Link>
               <p className="font-paragraph text-white/80 mb-6 max-w-md leading-relaxed">
@@ -280,7 +286,7 @@ export default function ServicesPage() {
                   <strong>Email:</strong> hello@sfrays.com
                 </p>
                 <p className="font-paragraph text-white/80">
-                  <strong>Phone:</strong> (555) 123-4567
+                  <strong>Phone:</strong> 314 499 4093
                 </p>
               </div>
             </div>
