@@ -65,8 +65,8 @@ export default function ContactPage() {
               <Image 
                 src="https://static.wixstatic.com/media/a1e0df_9660d1237dfb40138b4c81655ee6abee~mv2.jpeg"
                 alt="SFrays Logo"
-                className="w-16 h-16 rounded-lg"
-                width={64}
+                className="w-24 h-16 rounded-lg object-cover"
+                width={96}
               />
             </Link>
             <div className="hidden md:flex items-center space-x-8">
