@@ -61,12 +61,12 @@ export default function HomePage() {
       <nav className="relative z-50 bg-white/95 backdrop-blur-sm border-b border-primary/10">
         <div className="max-w-[120rem] mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-3">
               <Image 
                 src="https://static.wixstatic.com/media/a1e0df_9660d1237dfb40138b4c81655ee6abee~mv2.jpeg"
                 alt="SFrays Logo"
-                className="w-8 h-8 rounded-lg"
-                width={32}
+                className="w-12 h-12 rounded-lg"
+                width={48}
               />
               <span className="font-heading text-2xl font-bold text-primary">SFrays</span>
             </div>
@@ -87,7 +87,6 @@ export default function HomePage() {
           </div>
         </div>
       </nav>
-
       {/* Hero Section - Full Bleed */}
       <section className="relative w-full max-w-[120rem] mx-auto min-h-[90vh] flex items-center">
         {/* Background Image */}
@@ -243,7 +242,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* Solutions Section */}
       <section id="solutions" className="py-20 bg-secondary">
         <div className="max-w-[100rem] mx-auto px-6">
@@ -295,7 +293,6 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* Services Preview */}
       <section className="py-20 bg-background">
         <div className="max-w-[100rem] mx-auto px-6">
@@ -343,18 +340,17 @@ export default function HomePage() {
           </div>
         </div>
       </section>
-
       {/* Footer */}
       <footer className="bg-secondary-foreground text-white py-16">
         <div className="max-w-[100rem] mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-8">
             <div className="md:col-span-2">
-              <Link to="/" className="flex items-center space-x-2 mb-6">
+              <Link to="/" className="flex items-center space-x-3 mb-6">
                 <Image 
                   src="https://static.wixstatic.com/media/a1e0df_9660d1237dfb40138b4c81655ee6abee~mv2.jpeg"
                   alt="SFrays Logo"
-                  className="w-8 h-8 rounded-lg"
-                  width={32}
+                  className="w-12 h-12 rounded-lg"
+                  width={48}
                 />
                 <span className="font-heading text-2xl font-bold text-primary">SFrays</span>
               </Link>
