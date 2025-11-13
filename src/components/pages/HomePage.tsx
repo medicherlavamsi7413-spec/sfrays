@@ -68,7 +68,7 @@ export default function HomePage() {
                 className="w-12 h-12 rounded-lg"
                 width={48}
               />
-              <span className="font-heading text-2xl font-bold text-primary">SFrays</span>
+              <span className="font-heading text-2xl font-bold text-color-9">SFrays</span>
             </div>
             <div className="hidden md:flex items-center space-x-8">
               <Link to="/" className="font-paragraph text-secondary-foreground hover:text-primary transition-colors">

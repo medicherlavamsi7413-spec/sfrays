@@ -23,14 +23,15 @@ export default {
                 paragraph: "open sans"
             },
             colors: {
-                foreground: '#A8511E',
-                destructive: '#DF3131',
-                destructiveforeground: '#FFFFFF',
-                background: '#F9F7F3',
-                secondary: '#F9F7F3',
-                'secondary-foreground': '#1A1A1A',
-                'primary-foreground': '#FFFFFF',
-                primary: '#A8511E'
+                primary: "#A8511E",
+                "primary-foreground": "#FFFFFF",
+                secondary: "#F9F7F3",
+                "secondary-foreground": "#1A1A1A",
+                background: "#F9F7F3",
+                foreground: "#A8511E",
+                destructive: "#DF3131",
+                destructiveforeground: "#FFFFFF",
+                "color-9": "#1db5e7"
             },
         },
     },
