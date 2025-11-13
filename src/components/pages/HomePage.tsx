@@ -351,7 +351,7 @@ export default function HomePage() {
                   className="w-20 h-14 rounded-lg object-cover"
                   width={80}
                 />
-                <span className="font-heading text-2xl font-bold text-primary">SFrays</span>
+
               </Link>
               <p className="font-paragraph text-white/80 mb-6 max-w-md leading-relaxed">
                 Empowering businesses to achieve their full potential through innovative Salesforce solutions and expert consulting services.
