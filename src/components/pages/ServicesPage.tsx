@@ -6,6 +6,7 @@ import { ArrowRight, Cloud, Database, Users, Zap, Settings, BookOpen, Headphones
 import { useEffect, useState } from 'react';
 import { BaseCrudService } from '@/integrations';
 import { Services } from '@/entities';
+import { motion } from 'framer-motion';
 
 export default function ServicesPage() {
   const [services, setServices] = useState<Services[]>([]);
@@ -40,49 +41,84 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="relative z-50 bg-white/95 backdrop-blur-sm border-b border-primary/10">
+      <motion.nav 
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="relative z-50 bg-white/95 backdrop-blur-sm border-b border-primary/10"
+      >
         <div className="max-w-[120rem] mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <Link to="/">
-              <Image 
-                src="https://static.wixstatic.com/media/a1e0df_9660d1237dfb40138b4c81655ee6abee~mv2.jpeg"
-                alt="SFrays Logo"
-                className="w-24 h-16 rounded-lg object-cover"
-                width={96}
-              />
-            </Link>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 400 }}
+            >
+              <Link to="/">
+                <Image 
+                  src="https://static.wixstatic.com/media/a1e0df_9660d1237dfb40138b4c81655ee6abee~mv2.jpeg"
+                  alt="SFrays Logo"
+                  className="w-24 h-16 rounded-lg object-cover"
+                  width={96}
+                />
+              </Link>
+            </motion.div>
             <div className="hidden md:flex items-center space-x-8">
-              <Link to="/" className="font-paragraph text-secondary-foreground hover:text-primary transition-colors">
-                Home
-              </Link>
-              <Link to="/services" className="font-paragraph text-primary font-semibold">
-                Services
-              </Link>
-              <Link to="/training" className="font-paragraph text-secondary-foreground hover:text-primary transition-colors">
-                Training
-              </Link>
-              <Link to="/contact" className="font-paragraph text-secondary-foreground hover:text-primary transition-colors">
-                Contact
-              </Link>
+              {['Home', 'Services', 'Training', 'Contact'].map((item, idx) => (
+                <motion.div
+                  key={item}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                >
+                  <Link 
+                    to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
+                    className={`font-paragraph transition-colors relative group ${
+                      item === 'Services' ? 'text-primary font-semibold' : 'text-secondary-foreground hover:text-primary'
+                    }`}
+                  >
+                    {item}
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
+                  </Link>
+                </motion.div>
+              ))}
             </div>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* Hero Section */}
-      <section className="relative py-20 bg-primary text-primary-foreground overflow-hidden">
+      <motion.section 
+        className="relative py-20 bg-primary text-primary-foreground overflow-hidden"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
         <div className="absolute inset-0 bg-gradient-to-br from-primary to-primary/80"></div>
+        <motion.div 
+          className="absolute inset-0"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.1 }}
+          transition={{ duration: 1 }}
+        >
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-white rounded-full blur-3xl"></div>
+        </motion.div>
         <div className="relative z-10 max-w-[100rem] mx-auto px-6">
-          <div className="text-center">
+          <motion.div 
+            className="text-center"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+          >
             <h1 className="font-heading text-5xl lg:text-6xl font-bold mb-6">
               Our Salesforce Services
             </h1>
             <p className="font-paragraph text-xl text-primary-foreground/90 max-w-3xl mx-auto leading-relaxed">
               Comprehensive Salesforce solutions designed to transform your business operations, enhance customer relationships, and drive sustainable growth across your organization.
             </p>
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Services Grid */}
       <section className="py-20 bg-secondary">
@@ -111,68 +147,91 @@ export default function ServicesPage() {
               {services.map((service, index) => {
                 const IconComponent = serviceIcons[index % serviceIcons.length];
                 return (
-                  <Card key={service._id} className="group hover:shadow-xl transition-all duration-300 border-0 bg-white">
-                    <CardHeader>
-                      <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors">
-                        <IconComponent className="h-6 w-6 text-primary" />
-                      </div>
-                      <CardTitle className="font-heading text-xl font-bold text-secondary-foreground">
-                        {service.serviceName}
-                      </CardTitle>
-                      <p className="font-paragraph text-secondary-foreground/70">
-                        {service.shortDescription}
-                      </p>
-                    </CardHeader>
-                    <CardContent>
-                      {service.serviceImage && (
-                        <div className="mb-4">
-                          <Image 
-                            src={service.serviceImage}
-                            alt={service.serviceName || 'Service image'}
-                            className="w-full h-48 object-cover rounded-lg"
-                            width={400}
-                          />
-                        </div>
-                      )}
-                      <p className="font-paragraph text-secondary-foreground/80 mb-4 leading-relaxed">
-                        {service.detailedDescription}
-                      </p>
-                      {service.keyBenefits && (
-                        <div className="mb-4">
-                          <h4 className="font-heading font-semibold text-secondary-foreground mb-2">Key Benefits:</h4>
-                          <p className="font-paragraph text-sm text-secondary-foreground/70">
-                            {service.keyBenefits}
-                          </p>
-                        </div>
-                      )}
-                      {service.learnMoreUrl && (
-                        <Button asChild variant="outline" className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-                          <a href={service.learnMoreUrl} target="_blank" rel="noopener noreferrer">
-                            Learn More
-                            <ArrowRight className="ml-2 h-4 w-4" />
-                          </a>
-                        </Button>
-                      )}
-                    </CardContent>
-                  </Card>
+                  <motion.div
+                    key={service._id}
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: (index % 3) * 0.1, duration: 0.6 }}
+                    viewport={{ once: true }}
+                    whileHover={{ y: -10 }}
+                  >
+                    <Card className="group hover:shadow-xl transition-all duration-300 border-0 bg-white h-full">
+                      <CardHeader>
+                        <motion.div 
+                          className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center mb-4 group-hover:bg-primary/20 transition-colors"
+                          whileHover={{ rotate: 10, scale: 1.1 }}
+                        >
+                          <IconComponent className="h-6 w-6 text-primary" />
+                        </motion.div>
+                        <CardTitle className="font-heading text-xl font-bold text-secondary-foreground">
+                          {service.serviceName}
+                        </CardTitle>
+                        <p className="font-paragraph text-secondary-foreground/70">
+                          {service.shortDescription}
+                        </p>
+                      </CardHeader>
+                      <CardContent>
+                        {service.serviceImage && (
+                          <motion.div 
+                            className="mb-4"
+                            whileHover={{ scale: 1.05 }}
+                          >
+                            <Image 
+                              src={service.serviceImage}
+                              alt={service.serviceName || 'Service image'}
+                              className="w-full h-48 object-cover rounded-lg"
+                              width={400}
+                            />
+                          </motion.div>
+                        )}
+                        <p className="font-paragraph text-secondary-foreground/80 mb-4 leading-relaxed">
+                          {service.detailedDescription}
+                        </p>
+                        {service.keyBenefits && (
+                          <div className="mb-4">
+                            <h4 className="font-heading font-semibold text-secondary-foreground mb-2">Key Benefits:</h4>
+                            <p className="font-paragraph text-sm text-secondary-foreground/70">
+                              {service.keyBenefits}
+                            </p>
+                          </div>
+                        )}
+                        {service.learnMoreUrl && (
+                          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                            <Button asChild variant="outline" className="w-full border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+                              <a href={service.learnMoreUrl} target="_blank" rel="noopener noreferrer">
+                                Learn More
+                                <ArrowRight className="ml-2 h-4 w-4" />
+                              </a>
+                            </Button>
+                          </motion.div>
+                        )}
+                      </CardContent>
+                    </Card>
+                  </motion.div>
                 );
               })}
             </div>
           ) : (
-            <div className="text-center py-16">
+            <motion.div 
+              className="text-center py-16"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
               <h3 className="font-heading text-2xl font-bold text-secondary-foreground mb-4">
                 Our Services Are Coming Soon
               </h3>
               <p className="font-paragraph text-secondary-foreground/70 mb-8">
                 We're currently updating our services catalog. Please contact us directly to learn about our comprehensive Salesforce solutions.
               </p>
-              <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                <Link to="/contact">
-                  Contact Us
-                  <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-            </div>
+              <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                  <Link to="/contact">
+                    Contact Us
+                    <ArrowRight className="ml-2 h-4 w-4" />
+                  </Link>
+                </Button>
+              </motion.div>
+            </motion.div>
           )}
         </div>
       </section>
@@ -180,94 +239,119 @@ export default function ServicesPage() {
       {/* Core Services Overview */}
       <section className="py-20 bg-background">
         <div className="max-w-[100rem] mx-auto px-6">
-          <div className="text-center mb-16">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
             <h2 className="font-heading text-4xl lg:text-5xl font-bold text-secondary-foreground mb-6">
               Core Service Areas
             </h2>
             <p className="font-paragraph text-xl text-secondary-foreground/80 max-w-3xl mx-auto">
               Our expertise spans the entire Salesforce ecosystem, ensuring comprehensive solutions for your business needs.
             </p>
-          </div>
+          </motion.div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div className="text-center group">
-              <div className="bg-primary/10 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                <Cloud className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="font-heading text-lg font-bold text-secondary-foreground mb-2">
-                Implementation
-              </h3>
-              <p className="font-paragraph text-sm text-secondary-foreground/70">
-                End-to-end Salesforce implementation and migration services
-              </p>
-            </div>
-
-            <div className="text-center group">
-              <div className="bg-primary/10 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                <Settings className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="font-heading text-lg font-bold text-secondary-foreground mb-2">
-                Customization
-              </h3>
-              <p className="font-paragraph text-sm text-secondary-foreground/70">
-                Custom development and configuration to fit your unique needs
-              </p>
-            </div>
-
-            <div className="text-center group">
-              <div className="bg-primary/10 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                <Database className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="font-heading text-lg font-bold text-secondary-foreground mb-2">
-                Integration
-              </h3>
-              <p className="font-paragraph text-sm text-secondary-foreground/70">
-                Seamless integration with existing systems and third-party apps
-              </p>
-            </div>
-
-            <div className="text-center group">
-              <div className="bg-primary/10 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors">
-                <HeadphonesIcon className="h-8 w-8 text-primary" />
-              </div>
-              <h3 className="font-heading text-lg font-bold text-secondary-foreground mb-2">
-                Support
-              </h3>
-              <p className="font-paragraph text-sm text-secondary-foreground/70">
-                Ongoing support, maintenance, and optimization services
-              </p>
-            </div>
+            {[
+              { icon: Cloud, title: 'Implementation', desc: 'End-to-end Salesforce implementation and migration services' },
+              { icon: Settings, title: 'Customization', desc: 'Custom development and configuration to fit your unique needs' },
+              { icon: Database, title: 'Integration', desc: 'Seamless integration with existing systems and third-party apps' },
+              { icon: HeadphonesIcon, title: 'Support', desc: 'Ongoing support, maintenance, and optimization services' }
+            ].map((item, idx) => {
+              const IconComponent = item.icon;
+              return (
+                <motion.div
+                  key={idx}
+                  className="text-center group"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1, duration: 0.6 }}
+                  viewport={{ once: true }}
+                  whileHover={{ y: -10 }}
+                >
+                  <motion.div 
+                    className="bg-primary/10 w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:bg-primary/20 transition-colors"
+                    whileHover={{ rotate: 10, scale: 1.1 }}
+                  >
+                    <IconComponent className="h-8 w-8 text-primary" />
+                  </motion.div>
+                  <h3 className="font-heading text-lg font-bold text-secondary-foreground mb-2">
+                    {item.title}
+                  </h3>
+                  <p className="font-paragraph text-sm text-secondary-foreground/70">
+                    {item.desc}
+                  </p>
+                </motion.div>
+              );
+            })}
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary text-primary-foreground">
+      <motion.section 
+        className="py-20 bg-primary text-primary-foreground"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+      >
         <div className="max-w-[100rem] mx-auto px-6 text-center">
-          <h2 className="font-heading text-4xl lg:text-5xl font-bold mb-6">
+          <motion.h2 
+            className="font-heading text-4xl lg:text-5xl font-bold mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.6 }}
+            viewport={{ once: true }}
+          >
             Ready to Transform Your Business?
-          </h2>
-          <p className="font-paragraph text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
+          </motion.h2>
+          <motion.p 
+            className="font-paragraph text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            viewport={{ once: true }}
+          >
             Let's discuss how our Salesforce expertise can help you achieve your business goals and drive growth.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
-              <Link to="/contact">
-                Get Started Today
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
-              <Link to="/">
-                Learn More About Us
-              </Link>
-            </Button>
-          </div>
+          </motion.p>
+          <motion.div 
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button asChild size="lg" variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
+                <Link to="/contact">
+                  Get Started Today
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button asChild size="lg" variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
+                <Link to="/">
+                  Learn More About Us
+                </Link>
+              </Button>
+            </motion.div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Footer */}
-      <footer className="bg-secondary-foreground text-white py-16">
+      <motion.footer 
+        className="bg-secondary-foreground text-white py-16"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+      >
         <div className="max-w-[100rem] mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-8">
             <div className="md:col-span-2">
@@ -319,7 +403,7 @@ export default function ServicesPage() {
             </p>
           </div>
         </div>
-      </footer>
+      </motion.footer>
     </div>
   );
 }

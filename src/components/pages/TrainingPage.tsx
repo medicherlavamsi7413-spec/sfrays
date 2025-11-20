@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Image } from '@/components/ui/image';
 import { ArrowRight, Zap, Users, TrendingUp, BookOpen, Award, Lightbulb } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function TrainingPage() {
   const trainingLevels = [
@@ -72,144 +73,260 @@ export default function TrainingPage() {
     }
   ];
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.5 },
+    },
+  };
+
   return (
     <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="relative z-50 bg-white/95 backdrop-blur-sm border-b border-primary/10">
+      <motion.nav 
+        initial={{ y: -100 }}
+        animate={{ y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="relative z-50 bg-white/95 backdrop-blur-sm border-b border-primary/10"
+      >
         <div className="max-w-[120rem] mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <Link to="/">
-              <Image 
-                src="https://static.wixstatic.com/media/a1e0df_9660d1237dfb40138b4c81655ee6abee~mv2.jpeg"
-                alt="SFrays Logo"
-                className="w-24 h-16 rounded-lg object-cover"
-                width={96}
-              />
-            </Link>
+            <motion.div
+              whileHover={{ scale: 1.05 }}
+              transition={{ type: "spring", stiffness: 400 }}
+            >
+              <Link to="/">
+                <Image 
+                  src="https://static.wixstatic.com/media/a1e0df_9660d1237dfb40138b4c81655ee6abee~mv2.jpeg"
+                  alt="SFrays Logo"
+                  className="w-24 h-16 rounded-lg object-cover"
+                  width={96}
+                />
+              </Link>
+            </motion.div>
             <div className="hidden md:flex items-center space-x-8">
-              <Link to="/" className="font-paragraph text-secondary-foreground hover:text-primary transition-colors">
-                Home
-              </Link>
-              <Link to="/services" className="font-paragraph text-secondary-foreground hover:text-primary transition-colors">
-                Services
-              </Link>
-              <Link to="/training" className="font-paragraph text-primary font-semibold">
-                Training
-              </Link>
-              <Link to="/contact" className="font-paragraph text-secondary-foreground hover:text-primary transition-colors">
-                Contact
-              </Link>
+              {['Home', 'Services', 'Training', 'Contact'].map((item, idx) => (
+                <motion.div
+                  key={item}
+                  initial={{ opacity: 0, y: -20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                >
+                  <Link 
+                    to={item === 'Home' ? '/' : `/${item.toLowerCase()}`}
+                    className={`font-paragraph transition-colors relative group ${
+                      item === 'Training' ? 'text-primary font-semibold' : 'text-secondary-foreground hover:text-primary'
+                    }`}
+                  >
+                    {item}
+                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-primary group-hover:w-full transition-all duration-300"></span>
+                  </Link>
+                </motion.div>
+              ))}
             </div>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
       {/* Hero Section */}
-      <section className="relative w-full max-w-[120rem] mx-auto min-h-[80vh] flex items-center overflow-hidden">
-        {/* Background with gradient rays effect */}
+      <motion.section 
+        className="relative w-full max-w-[120rem] mx-auto min-h-[80vh] flex items-center overflow-hidden"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.8 }}
+      >
+        {/* Animated Background with rays effect */}
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-primary/10"></div>
-          <div className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"></div>
+          <motion.div 
+            className="absolute top-0 right-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"
+            animate={{ y: [0, 30, 0] }}
+            transition={{ duration: 6, repeat: Infinity }}
+          ></motion.div>
+          <motion.div 
+            className="absolute bottom-0 left-0 w-96 h-96 bg-primary/5 rounded-full blur-3xl"
+            animate={{ y: [0, -30, 0] }}
+            transition={{ duration: 6, repeat: Infinity, delay: 1 }}
+          ></motion.div>
         </div>
 
         {/* Content */}
         <div className="relative z-10 w-full px-6 lg:px-12">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             {/* Left Content */}
-            <div>
-              <div className="mb-6">
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <motion.div 
+                className="mb-6"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.2 }}
+              >
                 <span className="font-paragraph text-primary bg-primary/10 px-4 py-2 rounded-full text-sm font-semibold">
                   PROFESSIONAL DEVELOPMENT
                 </span>
-              </div>
-              <h1 className="font-heading text-5xl lg:text-6xl font-bold mb-6 leading-tight text-secondary-foreground">
+              </motion.div>
+              <motion.h1 
+                className="font-heading text-5xl lg:text-6xl font-bold mb-6 leading-tight text-secondary-foreground"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+              >
                 Elevate Your
                 <br />
                 <span className="text-primary">Professional Skills</span>
-              </h1>
-              <p className="font-paragraph text-xl mb-8 text-secondary-foreground/80 leading-relaxed max-w-2xl">
+              </motion.h1>
+              <motion.p 
+                className="font-paragraph text-xl mb-8 text-secondary-foreground/80 leading-relaxed max-w-2xl"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.4 }}
+              >
                 Comprehensive training programs designed for professionals at every level. Whether you're just starting out or looking to master advanced techniques, we have the right program for you.
-              </p>
-              <div className="flex flex-col sm:flex-row gap-4">
-                <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
-                  <Link to="#programs">
-                    Explore Programs
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Link>
-                </Button>
-                <Button asChild variant="outline" size="lg" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
-                  <Link to="/contact">Get in Touch</Link>
-                </Button>
-              </div>
-            </div>
+              </motion.p>
+              <motion.div 
+                className="flex flex-col sm:flex-row gap-4"
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.5 }}
+              >
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button asChild size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                    <Link to="#programs">
+                      Explore Programs
+                      <ArrowRight className="ml-2 h-5 w-5" />
+                    </Link>
+                  </Button>
+                </motion.div>
+                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                  <Button asChild variant="outline" size="lg" className="border-primary text-primary hover:bg-primary hover:text-primary-foreground">
+                    <Link to="/contact">Get in Touch</Link>
+                  </Button>
+                </motion.div>
+              </motion.div>
+            </motion.div>
 
             {/* Right Image */}
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-3xl blur-2xl"></div>
+            <motion.div 
+              className="relative"
+              initial={{ opacity: 0, x: 50 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+            >
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-3xl blur-2xl"
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 4, repeat: Infinity }}
+              ></motion.div>
               <Image 
                 src="https://static.wixstatic.com/media/a1e0df_5d511c9524e34fd6904f2b2721f19679~mv2.png?originWidth=576&originHeight=896"
                 alt="Professional training and development"
                 className="relative z-10 rounded-3xl shadow-2xl"
                 width={600}
               />
-            </div>
+            </motion.div>
           </div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Training Programs Section */}
       <section id="programs" className="py-20 bg-secondary">
         <div className="max-w-[100rem] mx-auto px-6">
-          <div className="text-center mb-16">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
             <h2 className="font-heading text-4xl lg:text-5xl font-bold text-secondary-foreground mb-6">
               Training Programs for Every Level
             </h2>
             <p className="font-paragraph text-xl text-secondary-foreground/80 max-w-3xl mx-auto">
               Choose the program that matches your experience level and career goals. Each program is carefully designed to provide practical, hands-on learning.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+          <motion.div 
+            className="grid md:grid-cols-2 lg:grid-cols-2 gap-8"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
             {trainingLevels.map((level) => {
               const IconComponent = level.icon;
               return (
-                <Card key={level.id} className={`group hover:shadow-xl transition-all duration-300 border-2 ${level.borderColor} ${level.color}`}>
-                  <CardHeader>
-                    <div className={`${level.accentColor} mb-4`}>
-                      <IconComponent className="h-10 w-10" />
-                    </div>
-                    <CardTitle className="font-heading text-2xl font-bold text-secondary-foreground">
-                      {level.title}
-                    </CardTitle>
-                    <p className="font-paragraph text-secondary-foreground/70 mt-2">
-                      {level.description}
-                    </p>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-3 mb-6">
-                      {level.features.map((feature, idx) => (
-                        <div key={idx} className="flex items-start space-x-3">
-                          <div className={`${level.accentColor} mt-1 flex-shrink-0`}>
-                            <Zap className="h-4 w-4" />
-                          </div>
-                          <span className="font-paragraph text-secondary-foreground text-sm">
-                            {feature}
-                          </span>
-                        </div>
-                      ))}
-                    </div>
-                    <Button asChild className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
-                      <Link to="/contact">
-                        Learn More
-                        <ArrowRight className="ml-2 h-4 w-4" />
-                      </Link>
-                    </Button>
-                  </CardContent>
-                </Card>
+                <motion.div
+                  key={level.id}
+                  variants={itemVariants}
+                  whileHover={{ y: -10 }}
+                >
+                  <Card className={`group hover:shadow-xl transition-all duration-300 border-2 ${level.borderColor} ${level.color} h-full`}>
+                    <CardHeader>
+                      <motion.div 
+                        className={`${level.accentColor} mb-4`}
+                        whileHover={{ rotate: 10, scale: 1.1 }}
+                      >
+                        <IconComponent className="h-10 w-10" />
+                      </motion.div>
+                      <CardTitle className="font-heading text-2xl font-bold text-secondary-foreground">
+                        {level.title}
+                      </CardTitle>
+                      <p className="font-paragraph text-secondary-foreground/70 mt-2">
+                        {level.description}
+                      </p>
+                    </CardHeader>
+                    <CardContent>
+                      <div className="space-y-3 mb-6">
+                        {level.features.map((feature, idx) => (
+                          <motion.div 
+                            key={idx} 
+                            className="flex items-start space-x-3"
+                            initial={{ opacity: 0, x: -10 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ delay: idx * 0.05 }}
+                            viewport={{ once: true }}
+                          >
+                            <div className={`${level.accentColor} mt-1 flex-shrink-0`}>
+                              <Zap className="h-4 w-4" />
+                            </div>
+                            <span className="font-paragraph text-secondary-foreground text-sm">
+                              {feature}
+                            </span>
+                          </motion.div>
+                        ))}
+                      </div>
+                      <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+                        <Button asChild className="w-full bg-primary hover:bg-primary/90 text-primary-foreground">
+                          <Link to="/contact">
+                            Learn More
+                            <ArrowRight className="ml-2 h-4 w-4" />
+                          </Link>
+                        </Button>
+                      </motion.div>
+                    </CardContent>
+                  </Card>
+                </motion.div>
               );
             })}
-          </div>
+          </motion.div>
         </div>
       </section>
 
@@ -217,7 +334,12 @@ export default function TrainingPage() {
       <section className="py-20 bg-background">
         <div className="max-w-[100rem] mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-16 items-center">
-            <div>
+            <motion.div
+              initial={{ opacity: 0, x: -50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+            >
               <h2 className="font-heading text-4xl lg:text-5xl font-bold text-secondary-foreground mb-6">
                 Why Choose Our Training Programs?
               </h2>
@@ -225,73 +347,62 @@ export default function TrainingPage() {
                 Our training programs are designed by industry experts with years of experience. We focus on practical, real-world skills that you can apply immediately.
               </p>
               <div className="space-y-6">
-                <div className="flex items-start space-x-4">
-                  <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Users className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-heading text-lg font-bold text-secondary-foreground mb-2">
-                      Expert Instructors
-                    </h3>
-                    <p className="font-paragraph text-secondary-foreground/70">
-                      Learn from certified professionals with extensive industry experience and proven track records.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-4">
-                  <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Lightbulb className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-heading text-lg font-bold text-secondary-foreground mb-2">
-                      Practical Learning
-                    </h3>
-                    <p className="font-paragraph text-secondary-foreground/70">
-                      Hands-on labs, real-world projects, and interactive exercises that prepare you for actual work scenarios.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-4">
-                  <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <Award className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-heading text-lg font-bold text-secondary-foreground mb-2">
-                      Certification Support
-                    </h3>
-                    <p className="font-paragraph text-secondary-foreground/70">
-                      Comprehensive preparation for industry certifications to advance your career and credentials.
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start space-x-4">
-                  <div className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <TrendingUp className="h-6 w-6 text-primary" />
-                  </div>
-                  <div>
-                    <h3 className="font-heading text-lg font-bold text-secondary-foreground mb-2">
-                      Career Growth
-                    </h3>
-                    <p className="font-paragraph text-secondary-foreground/70">
-                      Mentorship and guidance to help you advance your career and achieve your professional goals.
-                    </p>
-                  </div>
-                </div>
+                {[
+                  { icon: Users, title: 'Expert Instructors', desc: 'Learn from certified professionals with extensive industry experience and proven track records.' },
+                  { icon: Lightbulb, title: 'Practical Learning', desc: 'Hands-on labs, real-world projects, and interactive exercises that prepare you for actual work scenarios.' },
+                  { icon: Award, title: 'Certification Support', desc: 'Comprehensive preparation for industry certifications to advance your career and credentials.' },
+                  { icon: TrendingUp, title: 'Career Growth', desc: 'Mentorship and guidance to help you advance your career and achieve your professional goals.' }
+                ].map((item, idx) => {
+                  const IconComponent = item.icon;
+                  return (
+                    <motion.div 
+                      key={idx}
+                      className="flex items-start space-x-4"
+                      initial={{ opacity: 0, x: -30 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      transition={{ delay: idx * 0.1, duration: 0.5 }}
+                      viewport={{ once: true }}
+                    >
+                      <motion.div 
+                        className="bg-primary/10 w-12 h-12 rounded-lg flex items-center justify-center flex-shrink-0"
+                        whileHover={{ rotate: 10, scale: 1.1 }}
+                      >
+                        <IconComponent className="h-6 w-6 text-primary" />
+                      </motion.div>
+                      <div>
+                        <h3 className="font-heading text-lg font-bold text-secondary-foreground mb-2">
+                          {item.title}
+                        </h3>
+                        <p className="font-paragraph text-secondary-foreground/70">
+                          {item.desc}
+                        </p>
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </div>
-            </div>
+            </motion.div>
 
-            <div className="relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-3xl blur-2xl"></div>
+            <motion.div 
+              className="relative"
+              initial={{ opacity: 0, x: 50 }}
+              whileInView={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.6 }}
+              viewport={{ once: true }}
+              whileHover={{ y: -10 }}
+            >
+              <motion.div 
+                className="absolute inset-0 bg-gradient-to-br from-primary/20 to-primary/5 rounded-3xl blur-2xl"
+                animate={{ scale: [1, 1.05, 1] }}
+                transition={{ duration: 4, repeat: Infinity }}
+              ></motion.div>
               <Image 
                 src="https://static.wixstatic.com/media/a1e0df_6d6305cd176046c9b5447ca78ac18123~mv2.png?originWidth=1920&originHeight=1024"
                 alt="Professional development and training environment"
                 className="relative z-10 rounded-3xl shadow-2xl"
                 width={600}
               />
-            </div>
+            </motion.div>
           </div>
         </div>
       </section>
@@ -299,109 +410,137 @@ export default function TrainingPage() {
       {/* Learning Paths */}
       <section className="py-20 bg-secondary">
         <div className="max-w-[100rem] mx-auto px-6">
-          <div className="text-center mb-16">
+          <motion.div 
+            className="text-center mb-16"
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+          >
             <h2 className="font-heading text-4xl lg:text-5xl font-bold text-secondary-foreground mb-6">
               Flexible Learning Paths
             </h2>
             <p className="font-paragraph text-xl text-secondary-foreground/80 max-w-3xl mx-auto">
               Choose how you want to learn - we offer multiple formats to fit your schedule and learning style.
             </p>
-          </div>
+          </motion.div>
 
-          <div className="grid md:grid-cols-3 gap-8">
-            <Card className="border-0 bg-white hover:shadow-lg transition-all">
-              <CardHeader>
-                <div className="bg-primary/10 w-14 h-14 rounded-lg flex items-center justify-center mb-4">
-                  <BookOpen className="h-7 w-7 text-primary" />
-                </div>
-                <CardTitle className="font-heading text-xl font-bold text-secondary-foreground">
-                  Self-Paced Online
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="font-paragraph text-secondary-foreground/70 mb-4">
-                  Learn at your own pace with lifetime access to course materials, videos, and resources.
-                </p>
-                <ul className="space-y-2 text-sm font-paragraph text-secondary-foreground/70">
-                  <li>✓ Flexible schedule</li>
-                  <li>✓ Lifetime access</li>
-                  <li>✓ Community support</li>
-                </ul>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 bg-white hover:shadow-lg transition-all">
-              <CardHeader>
-                <div className="bg-primary/10 w-14 h-14 rounded-lg flex items-center justify-center mb-4">
-                  <Users className="h-7 w-7 text-primary" />
-                </div>
-                <CardTitle className="font-heading text-xl font-bold text-secondary-foreground">
-                  Live Instructor-Led
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="font-paragraph text-secondary-foreground/70 mb-4">
-                  Interactive sessions with expert instructors, Q&A, and real-time feedback.
-                </p>
-                <ul className="space-y-2 text-sm font-paragraph text-secondary-foreground/70">
-                  <li>✓ Real-time interaction</li>
-                  <li>✓ Expert guidance</li>
-                  <li>✓ Networking opportunities</li>
-                </ul>
-              </CardContent>
-            </Card>
-
-            <Card className="border-0 bg-white hover:shadow-lg transition-all">
-              <CardHeader>
-                <div className="bg-primary/10 w-14 h-14 rounded-lg flex items-center justify-center mb-4">
-                  <Award className="h-7 w-7 text-primary" />
-                </div>
-                <CardTitle className="font-heading text-xl font-bold text-secondary-foreground">
-                  Hybrid Programs
-                </CardTitle>
-              </CardHeader>
-              <CardContent>
-                <p className="font-paragraph text-secondary-foreground/70 mb-4">
-                  Combine self-paced learning with live sessions for the best of both worlds.
-                </p>
-                <ul className="space-y-2 text-sm font-paragraph text-secondary-foreground/70">
-                  <li>✓ Flexibility + interaction</li>
-                  <li>✓ Personalized support</li>
-                  <li>✓ Comprehensive learning</li>
-                </ul>
-              </CardContent>
-            </Card>
-          </div>
+          <motion.div 
+            className="grid md:grid-cols-3 gap-8"
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+          >
+            {[
+              { icon: BookOpen, title: 'Self-Paced Online', features: ['Flexible schedule', 'Lifetime access', 'Community support'] },
+              { icon: Users, title: 'Live Instructor-Led', features: ['Real-time interaction', 'Expert guidance', 'Networking opportunities'] },
+              { icon: Award, title: 'Hybrid Programs', features: ['Flexibility + interaction', 'Personalized support', 'Comprehensive learning'] }
+            ].map((item, idx) => {
+              const IconComponent = item.icon;
+              return (
+                <motion.div key={idx} variants={itemVariants}>
+                  <Card className="border-0 bg-white hover:shadow-lg transition-all h-full">
+                    <CardHeader>
+                      <motion.div 
+                        className="bg-primary/10 w-14 h-14 rounded-lg flex items-center justify-center mb-4"
+                        whileHover={{ rotate: 10, scale: 1.1 }}
+                      >
+                        <IconComponent className="h-7 w-7 text-primary" />
+                      </motion.div>
+                      <CardTitle className="font-heading text-xl font-bold text-secondary-foreground">
+                        {item.title}
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent>
+                      <p className="font-paragraph text-secondary-foreground/70 mb-4">
+                        {idx === 0 && 'Learn at your own pace with lifetime access to course materials, videos, and resources.'}
+                        {idx === 1 && 'Interactive sessions with expert instructors, Q&A, and real-time feedback.'}
+                        {idx === 2 && 'Combine self-paced learning with live sessions for the best of both worlds.'}
+                      </p>
+                      <ul className="space-y-2 text-sm font-paragraph text-secondary-foreground/70">
+                        {item.features.map((feature, fidx) => (
+                          <motion.li 
+                            key={fidx}
+                            initial={{ opacity: 0, x: -10 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ delay: fidx * 0.05 }}
+                            viewport={{ once: true }}
+                          >
+                            ✓ {feature}
+                          </motion.li>
+                        ))}
+                      </ul>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              );
+            })}
+          </motion.div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-primary text-primary-foreground">
+      <motion.section 
+        className="py-20 bg-primary text-primary-foreground"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+      >
         <div className="max-w-[100rem] mx-auto px-6 text-center">
-          <h2 className="font-heading text-4xl lg:text-5xl font-bold mb-6">
+          <motion.h2 
+            className="font-heading text-4xl lg:text-5xl font-bold mb-6"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1, duration: 0.6 }}
+            viewport={{ once: true }}
+          >
             Ready to Start Your Learning Journey?
-          </h2>
-          <p className="font-paragraph text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto">
+          </motion.h2>
+          <motion.p 
+            className="font-paragraph text-xl text-primary-foreground/90 mb-8 max-w-2xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
+            viewport={{ once: true }}
+          >
             Join hundreds of professionals who have advanced their careers through our comprehensive training programs.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button asChild size="lg" variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
-              <Link to="/contact">
-                Enroll Now
-                <ArrowRight className="ml-2 h-5 w-5" />
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
-              <Link to="/">
-                Learn More About Us
-              </Link>
-            </Button>
-          </div>
+          </motion.p>
+          <motion.div 
+            className="flex flex-col sm:flex-row gap-4 justify-center"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.6 }}
+            viewport={{ once: true }}
+          >
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button asChild size="lg" variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
+                <Link to="/contact">
+                  Enroll Now
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Link>
+              </Button>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button asChild size="lg" variant="outline" className="border-primary-foreground text-primary-foreground hover:bg-primary-foreground hover:text-primary">
+                <Link to="/">
+                  Learn More About Us
+                </Link>
+              </Button>
+            </motion.div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
       {/* Footer */}
-      <footer className="bg-secondary-foreground text-white py-16">
+      <motion.footer 
+        className="bg-secondary-foreground text-white py-16"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ duration: 0.6 }}
+        viewport={{ once: true }}
+      >
         <div className="max-w-[100rem] mx-auto px-6">
           <div className="grid md:grid-cols-4 gap-8">
             <div className="md:col-span-2">
@@ -452,7 +591,7 @@ export default function TrainingPage() {
             </p>
           </div>
         </div>
-      </footer>
+      </motion.footer>
     </div>
   );
 }
