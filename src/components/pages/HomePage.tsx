@@ -76,6 +76,9 @@ export default function HomePage() {
               <Link to="/services" className="font-paragraph text-secondary-foreground hover:text-primary transition-colors">
                 Services
               </Link>
+              <Link to="/training" className="font-paragraph text-secondary-foreground hover:text-primary transition-colors">
+                Training
+              </Link>
               <Link to="/contact" className="font-paragraph text-secondary-foreground hover:text-primary transition-colors">
                 Contact
               </Link>

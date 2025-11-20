@@ -58,6 +58,9 @@ export default function ServicesPage() {
               <Link to="/services" className="font-paragraph text-primary font-semibold">
                 Services
               </Link>
+              <Link to="/training" className="font-paragraph text-secondary-foreground hover:text-primary transition-colors">
+                Training
+              </Link>
               <Link to="/contact" className="font-paragraph text-secondary-foreground hover:text-primary transition-colors">
                 Contact
               </Link>
